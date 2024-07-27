@@ -1,0 +1,2 @@
+# InventAnalyticsFrontendCase
+InventAnalyticsFrontendCase
