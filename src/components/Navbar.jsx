@@ -9,6 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { setYearNumber } from '../redux/slices/yearFilter';
+
+
 const Navbar = () => {
     const searchName = useSelector(state => state.searchNameSlice.value);
     const dispatch = useDispatch();

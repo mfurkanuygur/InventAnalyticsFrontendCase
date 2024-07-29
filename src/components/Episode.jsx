@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getEpisodeDetail } from '../request/request'
 import { FaStar } from "react-icons/fa";
-import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Episode = () => {
     const [data, setData] = useState()

@@ -19,7 +19,6 @@ const Home = () => {
     const data = useSelector(state => state.dataSlice.value)
     console.log(data)
     const dispatch = useDispatch();
-    // const [data, setData] = useState()
 
     useEffect(() => {
         const fetchData = async () => {

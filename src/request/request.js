@@ -1,17 +1,14 @@
-import { toast } from "react-toastify";
 
-const apikey = process.env.REACT_APP_APIKEY
+const apikey = import.meta.env.APIKEY
 
 export const getSearchValueData = async (search = "pokemon", pageNumber = "1", year = null, type = null) => {
     try {
         const response = await fetch(`http://www.omdbapi.com/?apikey=${apikey}&s=${search}&page=${pageNumber}&y=${year}&type=${type}`);
         console.log(`http://www.omdbapi.com/?apikey=96521a8e&s=${search}&page=${pageNumber}&y=${year}&type=${type}`)
         const data = await response.json();
-        // console.log(data)
         return data;
     } catch (error) {
         console.error('Error:', error);
-        toast.error(error)
         return error;
     }
 };
@@ -23,7 +20,7 @@ export const getUniqueMovieData = async (id) => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return null; // Hata durumunda null döndürüyoruz
+        return null;
     }
 }
 
@@ -34,7 +31,7 @@ export const getSeasonDetail = async (id, seasonNumber = 1) => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return null; // Hata durumunda null döndürüyoruz
+        return null; 
     }
 }
 export const getEpisodeDetail = async (id, seasonNumber,episodeNumber) => {
@@ -45,6 +42,6 @@ export const getEpisodeDetail = async (id, seasonNumber,episodeNumber) => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return null; // Hata durumunda null döndürüyoruz
+        return null;
     }
 }

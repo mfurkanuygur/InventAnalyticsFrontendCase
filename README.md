@@ -2,7 +2,7 @@
 
 ## Projeyi Ayağa Kaldırmak İçin Kullanılacak Scriptler:
 
-Test ederken sorun yaşamamak adına lütfen serverı aşağıdaki scriptler ile ayağa kaldırınız:
+Test ederken sorun yaşamamak adına lütfen aşağıdaki scriptler ile ayağa kaldırınız:
 
 ### `npm install`
 
