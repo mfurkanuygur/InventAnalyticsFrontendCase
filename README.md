@@ -12,11 +12,10 @@ Gerekli paketleri yüklemek için bu script ile çalıştırabilirsiniz.
 
 Paketler yüklendikten sonra bu script ile React projesini tek seferde ayağa kaldırabilirsiniz.
 
-## Github
+###
 
-Github hesabıma ulaşmak için: [M.Furkan UYGUR](https://github.com/mfurkanuygur)
-
-
+1. Sayfa ilk yüklenirken varsayılan olarak "pokemon" aranıyormuş gibi davranmaktadır.
+2. 
 ## Kullandığım Teknolojiler
 
 1. React
