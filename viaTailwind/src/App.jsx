@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <main className='min-h-dvh min-w-full bg-slate-400 container mx-auto  text-white '>
+    <main className='min-h-dvh min-w-full bg-secondary container mx-auto  text-white '>
       <Navbar />
       <Router />
       <ToastContainer

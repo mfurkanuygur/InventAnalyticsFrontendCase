@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getSeasonDetail, getUniqueMovieData } from '../request/request'
 import { FaStar } from "react-icons/fa";
+import { FaAngleDoubleRight } from "react-icons/fa";
+
 const Detail = () => {
     const { id } = useParams()
     const [data, setData] = useState()
@@ -29,34 +31,45 @@ const Detail = () => {
 
     }
     return (
-        <div className='flex flex-col gap-4 justify-center items-center min-h-dvh bg-slate-800   p-4'>
+        <div className='flex flex-col gap-4 justify-center items-center min-h-dvh   text-white py-12 md:py-24 lg:px-32 '>
             {
                 data &&
-                <div className='grid grid-cols-1 md:grid-cols-3  md:gap-4'>
-                    <div className='col-span-1 flex justify-center items-start  w-full '>
-                        <img src={data.Poster} alt="" className=' rounded-xl bg-gray-600  w-full min-w-64 max-w-80 h-auto min-h-96' />
+                <div className='grid grid-cols-1 md:grid-cols-10 gap-y-8 md:gap-16 mt-16 mx-4 bg-white text-secondary p-4 md:p-16 rounded-xl'>
+                    <div className='col-span-3 h-min'>
+                        {
+                            data?.Poster !== "N/A" &&
+                            <img src={data.Poster} alt="" className='rounded-xl w-full border-2 h-auto shadow-xl' /> ||
+                            <div className='rounded-xl w-full text-white font-bold flex justify-center items-center bg-secondary h-96 shadow-xl' >
+                                NO IMAGE
+                            </div>
+                        }
                     </div>
-                    <div className='col-span-2 flex flex-col gap-2 min-h-dvh'>
-                        <div className='flex gap-4 items-center'>
-                            <h2 className='flex items-center text-sm  text-slate-300 capitalize'>{data.Type}</h2>
-                            <p className='flex items-center font-bold text-lg gap-2'><FaStar />{data.imdbRating}</p>
+                    <div className='col-span-7 h-min flex flex-col gap-4 '>
+                        <div className='flex w-full justify-between items-center'>
+                            <h1 className='text-4xl flex flex-col items-start font-bold leading-snug'>
+                                {data.Title}
+                                <span className='text-xs px-1'>#{data.imdbID}</span>
+                            </h1>
+                            <div className='flex gap-1 md:gap-4 items-center'>
+                                <p className='flex items-center font-bold text-lg gap-1'><FaStar className='text-xl text-primary_hover' />{data.imdbRating}</p>
+                                <h2 className='flex items-center text-sm bg-primary text-white rounded-full px-2 md:px-4 py-1 md:py-2 capitalize'>{data.Type}</h2>
+                            </div>
                         </div>
-                        <h1 className='text-4xl font-bold leading-snug'>{data.Title}</h1>
-                        <div className='flex items-center gap-4 text-sm text-slate-300'>
+                        <div className='flex items-center text-center gap-4 text-sm '>
                             <p >{data.Year}</p>
-                            <span>/</span>
+                            <span className='text-2xl md:text-sm'>/</span>
                             <p>{data.Genre}</p>
-                            <span>/</span>
+                            <span className='text-2xl md:text-sm'>/</span>
                             <p>{data.Runtime}</p>
-                            <span>/</span>
+                            <span className='text-2xl md:text-sm'>/</span>
                             <p>{data.Language}</p>
                         </div>
                         <div>
                             <p className='font-bold  capitalize '>summary:</p>
-                            <p className='text-justify indent-5'>{data.Plot}</p>
+                            <p className='text-justify'>{data.Plot}</p>
                         </div>
                         <div>
-                            <div className='border-y py-4 my-4 border-slate-600'>
+                            <div className='border-y py-4 my-3 border-slate-600'>
                                 <div className='flex gap-2 items-center'>
                                     <p className='capitalize font-thin'>Director:</p>
                                     <p className='font-semibold'>{data.Director}</p>
@@ -70,22 +83,22 @@ const Detail = () => {
                                     <p className='font-semibold'>{data.Actors}</p>
                                 </div>
                             </div>
-                            <div className='flex flex-col md:flex-row justify-between items-center'>
+                            <div className='flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center'>
                                 {
                                     data.Type === "series" &&
                                     <>
-                                        <div className='flex gap-4 items-center'>
-                                            <p className='flex items-center  text-slate-300 capitalize'>Seasons: </p>
-                                            <p className='flex items-center font-bold text-lg gap-2'>{data.totalSeasons}</p>
+                                        <div className='flex gap-2 items-center capitalize'>
+                                            <p >Seasons:</p>
+                                            <p className=' font-bold text-lg'>{data.totalSeasons}</p>
                                         </div>
-                                        <div className='flex items-center gap-2'>
-                                            <button className='text-slate-800 bg-slate-300 px-6 py-2 rounded-s-xl'
+                                        <div className='flex items-center gap-2 text-white font-bold'>
+                                            <button className='bg-primary px-4 py-2 rounded-s-full'
                                                 disabled={seasonNumber == 1}
                                                 onClick={handlePrevSeason}>Prev Season</button>
 
-                                            <p className='font-bold text-xl'>{seasonNumber}</p>
+                                            <p className='font-bold text-xl text-secondary'>{seasonNumber}</p>
 
-                                            <button className='text-slate-800 bg-slate-300 px-6 py-2 rounded-e-xl'
+                                            <button className='bg-primary px-4 py-2 rounded-e-full '
                                                 disabled={seasonNumber >= season.totalSeasons}
                                                 onClick={handleNextSeason}>Next Season</button>
                                         </div>
@@ -103,14 +116,18 @@ const Detail = () => {
                                 </div>
                                 <div className='grid grid-cols-2 gap-4'>
                                     {
-
                                         season?.Episodes?.map(s => (
-                                            <div key={s.imdbID} className='bg-slate-300 text-black p-3 rounded-xl'>
-                                                <div className='flex flex-col items-start '>
+                                            <div key={s.imdbID} className=' text-secondary border-2 border-secondary p-3 rounded-xl'>
+                                                <div className='flex justify-between items-center '>
                                                     <p className='text-sm'>S{season.Season}.E{s.Episode}</p>
-                                                    <p className='font-bold line-clamp-2'>{s.Title}</p>
+                                                    <p className='text-xs'>{s.Released.split("-").reverse().join(".")}</p>
                                                 </div>
-                                                <p className='text-xs'>{s.Released.split("-").reverse().join(".")}</p>
+                                                <Link to={`/episode/${s.imdbID}`}>
+                                                    <div className='flex justify-between items-center'>
+                                                        <p className='font-bold text-lg line-clamp-1'>{s.Title}</p>
+                                                        <FaAngleDoubleRight className='text-xl' />
+                                                    </div>
+                                                </Link>
                                             </div>
                                         ))
                                     }

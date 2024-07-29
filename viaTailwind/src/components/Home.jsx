@@ -8,6 +8,7 @@ import { setMovieType } from '../redux/slices/movieType';
 import { setYearNumber } from '../redux/slices/yearFilter';
 import { decrement, increment, setPageNumber } from '../redux/slices/pageNumber';
 import { setData } from '../redux/slices/data';
+import { FaAngleDoubleRight ,FaAngleDoubleLeft } from "react-icons/fa";
 
 const Home = () => {
     const pageNumber = useSelector(state => state.pageNumberSlice.value);
@@ -53,44 +54,60 @@ const Home = () => {
         getSearchValueData(searchName, newPageNumber, yearFilter, movieType).then(fetchData => dispatch(setData(fetchData)));
     };
     return (
-        <section className='flex flex-col gap-4 justify-center items-center min-h-dvh bg-slate-400 py-16'>
-
-            <div className=' w-full md:w-2/3 flex flex-col lg:flex-row justify-evenly items-center gap-4'>
-                <div className='flex flex-col items-start justify-center gap-1'>
-                    <p className='font-bold text-lg text-slate-800'>Enter Year:</p>
-                    <form onSubmit={(e) => handleYear(e)} className='flex items-stretch justify-center '>
-                        <input className='text-white outline-none bg-slate-500 py-2 px-2 rounded-s-xl ' value={yearFilter == "null" ? "" : yearFilter} type="search" onChange={e => dispatch(setYearNumber(e.target.value))} placeholder='Movie or Series year...' />
-                        <button type='submit' className='px-6 py-2  bg-white hover:bg-slate-500 text-slate-800 hover:text-white rounded-e-xl'>Filter</button>
-                    </form>
-                </div>
-                <div className='flex flex-col justify-center items-start gap-1 capitalize '>
-                    <p className='font-bold text-lg text-slate-800'>Select Type:</p>
-                    <div className='flex justify-center items-center gap-4 bg-slate-500 rounded-xl '>
-                        <div className='flex items-center gap-2 px-2 md:px-6 py-2 '>
-                            <input checked={movieType == "null"} type="radio" id="alltype" name='selectType' value="null" className='w-5 h-5 checked:bg-black' onChange={handleType} />
+        <section className='flex flex-col gap-4 justify-center items-center min-h-dvh   text-secondary py-24 lg:px-32 '>
+           
+            <div className=' w-full  flex flex-col md:flex-row justify-between items-center md:items-end gap-4  '>
+                <div className='flex flex-col justify-center items-start gap-1 capitalize  '>
+                    <p className='font-bold text-lg text-white w-full text-center md:text-left'>Select Type</p>
+                    <div className='flex justify-center items-center  divide-x divide-secondary rounded-xl px-2  bg-white'>
+                        <div className='flex items-center gap-2 py-2 px-3'>
+                            <input checked={movieType == "null"} type="radio" id="alltype" name='selectType' value="null"
+                                className='w-5 h-5 peer relative appearance-none border-2 border-primary rounded-full  bg-white 
+                               focus:bg-primary_hover checked:bg-primary_hover checked:border-none'
+                                onChange={handleType} />
                             <label htmlFor="alltype" className='cursor-pointer'>all type</label>
                         </div>
-                        <div className='flex items-center  gap-2 border-x-2 px-2 md:px-6 py-2 '>
-                            <input checked={movieType == "movie"} type="radio" id="movie" name='selectType' value="movie" className=" w-5 h-5" onChange={handleType} />
+                        <div className='flex items-center gap-2 py-2 px-4 '>
+                            <input checked={movieType == "movie"} type="radio" id="movie" name='selectType' value="movie"
+                                className="w-5 h-5 peer relative appearance-none border-2 border-primary rounded-full  bg-white 
+                            focus:bg-primary_hover checked:bg-primary_hover checked:border-none"
+                                onChange={handleType} />
                             <label htmlFor="movie" className='cursor-pointer'>Movie</label>
                         </div>
-                        <div className='flex items-center gap-2 px-2 md:px-6 py-2 '>
-                            <input checked={movieType == "series"} type="radio" id="series" name='selectType' value="series" className='w-5 h-5' onChange={handleType} />
+                        <div className='flex items-center gap-2 py-2 px-3'>
+                            <input checked={movieType == "series"} type="radio" id="series" name='selectType' value="series"
+                                className='w-5 h-5 peer relative appearance-none border-2 border-primary rounded-full  bg-white 
+                            focus:bg-primary_hover checked:bg-primary_hover checked:border-none' onChange={handleType} />
                             <label htmlFor="series" className='cursor-pointer'>series</label>
                         </div>
                     </div>
                 </div>
+                <h1 className='hidden md:block text-xl text-white font-semibold'>Total Results: {data?.totalResults}</h1>
+                <div className='flex flex-col items-start justify-center gap-1  '>
+                    <p className='font-bold text-lg text-white w-full text-center md:text-left'>Enter Year</p>
+                    <form onSubmit={(e) => handleYear(e)} className='flex items-center justify-center text-secondary '>
+                        <input className='focus:outline-none  py-2 px-2 rounded-s-xl' value={yearFilter == "null" ? "" : yearFilter} type="search" onChange={e => dispatch(setYearNumber(e.target.value))} placeholder='Movie or Series year...' />
+                        <button type='submit' className='bg-primary hover:bg-primary_hover px-4 py-2  hover:text-white rounded-e-xl'>Filter</button>
+                    </form>
+                </div>
+                <h1 className='block md:hidden text-lg text-white font-semibold'>Total Results: {data?.totalResults}</h1>
+
             </div>
 
-            <h1 className='font-bold text-2xl text-black'>Total Results: {data?.totalResults}</h1>
             {
                 data &&
                 <>
                     <RenderMovie data={data} />
-                    <div className='flex items-center bg-slate-600  gap-3 rounded-xl '>
-                        <button className="hover:bg-slate-300 px-6 py-2 rounded-s-xl" disabled={pageNumber == 1 ? true : null} onClick={prevPage}>Prev</button>
-                        <p className="font-bold text-2xl" href="#">{pageNumber}</p>
-                        <button className="hover:bg-slate-300 px-6 py-2 rounded-e-xl" disabled={pageNumber >= Math.ceil(data?.totalResults / 10)} onClick={nextPage} >Next</button>
+                    <div className='flex items-center bg-white py-2  rounded-xl  '>
+                        <button className=" text-primary px-4 rounded-s-xl" 
+                        disabled={pageNumber == 1 ? true : null} onClick={prevPage}>
+                            <FaAngleDoubleLeft className='text-xl'/>
+                        </button>
+                        <p className="font-bold text-2xl bg-white  px-3 border-x-2 border-secondary" href="#">{pageNumber}</p>
+                        <button className=" px-4  rounded-e-xl  text-primary"
+                            disabled={pageNumber >= Math.ceil(data?.totalResults / 10)} onClick={nextPage} >
+                            <FaAngleDoubleRight className='text-xl'/>
+                        </button>
                     </div>
                 </>
                 ||

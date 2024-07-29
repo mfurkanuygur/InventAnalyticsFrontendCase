@@ -1,41 +1,41 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaAngleDoubleRight } from "react-icons/fa";
-import { BiDetail } from "react-icons/bi";
+import { TiInfoLarge } from "react-icons/ti";
 const RenderMovie = ({ data }) => {
     return (
-        <table className="table-auto  md:w-2/3 xl:w-3/4 mx-5 md:mx-0 border-2 border-slate-500 text-center">
-            <thead className=' '>
-                <tr className=' border-slate-100 bg-slate-500'>
-                    <th className='py-3 border-b-2 border-slate-300'># imdbID</th>
-                    <th className='py-3 border-b-2 border-slate-300'>Poster</th>
-                    <th className='py-3 border-b-2 border-slate-300'>Name</th>
-                    <th className='py-3 border-b-2 border-slate-300'>Year</th>
-                    <th className='py-3 border-b-2 border-slate-300'>Type</th>
-                    <th className='py-3 border-b-2 border-slate-300 '>
-                        <BiDetail className='w-full px-4 text-xl' />
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    data?.Search?.map((d) => (
-                        <tr key={d.imdbID} className=' hover:bg-slate-300 hover:text-black  transition-all  capitalize'>
-                            <td className='-rotate-90 md:rotate-0 md:py-3 border-2 border-slate-500 lowercase w-36'>{d?.imdbID}</td>
-                            <td className='p-3 border-2 border-slate-500 lowercase w-32'> <img className='rounded-xl bg-gray-500 w-24 h-32 mx-auto' src={d?.Poster} /></td>
-                            <td className='py-3 border-2 border-slate-500 w-1/3 h-20'>{d?.Title}</td>
-                            <td className='py-3 border-2 border-slate-500 w-40'>{d?.Year}</td>
-                            <td className='py-3 border-2 border-slate-500 w-20'>{d?.Type}</td>
-                            <td className='py-3 border-2 border-slate-500  w-10  '>
-                                <Link to={`${d.imdbID}`} className='py-3' title="Detail">
-                                    <FaAngleDoubleRight className='mx-auto  text-2xl hover:animate-ping' />
-                                </Link>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+        <div className=' w-full  mx-2 rounded-xl border-2 overflow-hidden'>
+            <table className="table-auto  w-full  text-center bg-white text-secondary ">
+                <thead >
+                    <tr className='divide-x divide-black  uppercase italic text-primary '>
+                        <th className='py-3 italic text-xl'>#</th>
+                        <th className='py-3'>Poster</th>
+                        <th className='py-4 flex justify-center items-center w-full'>Name<span className='block md:hidden'>/Type</span></th>
+                        <th className='py-3'>Year</th>
+                        <th className='hidden md:block py-4'>Type</th>
+                        <th className='py-3 px-2 '><TiInfoLarge className='md:w-full text-xl'/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data?.Search?.map(d => (
+                            <tr key={d.imdbID} className='border-y-2 last:border-b-0 divide-x  w-full text-center capitalize'>
+                                <td ><p className='text-xs md:text-base -rotate-45'># {d.imdbID}</p></td>
+                                <td className='p-1'><img src={d.Poster} className='w-44 md:w-24 h-auto md:h-36  mx-auto rounded-xl' /></td>
+                                <td>
+                                    <p className='font-bold md:text-lg '>{d.Title}</p>
+                                    <p className='block md:hidden text-xs border-t-2 pt-2 mt-2 w-min mx-auto'>{d.Type}</p>
+                                </td>
+                                <td><p>{d.Year}</p></td>
+                                <td className='hidden md:flex justify-center items-center min-h-40  '><p>{d.Type}</p></td>
+                                <td className=''><Link to={`/${d.imdbID}`}><FaAngleDoubleRight className='w-full text-xl md:text-2xl text-primary hover:text-primary_hover animate-pulse' /></Link></td>
+                            </tr>
+
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div >
     )
 }
 
