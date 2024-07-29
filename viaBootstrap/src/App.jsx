@@ -1,4 +1,4 @@
-import '../src/scss/main.scss';
+import "./scss/main.scss"
 
 import Nav from './components/nav/Navbar'
 import Router from './routes/Router';

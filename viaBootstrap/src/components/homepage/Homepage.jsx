@@ -8,6 +8,7 @@ const Homepage = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const [year, setYear] = useState("")
     const [type, setType] = useState(null)
+
     const handlesubmit = (e) => {
         e.preventDefault()
         getSearchValueData(search).then(data => setMovie(data))
@@ -21,9 +22,18 @@ const Homepage = () => {
         search ?
             getSearchValueData(search, 1, year).then(data => setMovie(data)) :
             getSearchValueData("", 1, year).then(data => setMovie(data))
-
         setPageNumber(1)
         setYear("")
+    }
+
+    const handleType = (e) => {
+        const newType = e.target.value
+        setType(newType)
+        search || year ?
+            getSearchValueData(search, 1, year, newType).then(data => setMovie(data)) :
+            getSearchValueData("", 1, year, newType).then(data => setMovie(data))
+
+        setPageNumber(1)
     }
     const öncekiSayfa = () => {
         const newPageNumber = pageNumber - 1;
@@ -41,16 +51,6 @@ const Homepage = () => {
             getSearchValueData(search, newPageNumber).then(data => setMovie(data))
             ;
     }
-
-    const handleType = (e) => {
-        const newType = e.target.value
-        setType(newType)
-        search || year ?
-            getSearchValueData(search, 1, year, newType).then(data => setMovie(data)) :
-            getSearchValueData("", 1, year, newType).then(data => setMovie(data))
-
-        setPageNumber(1)
-    }
     useEffect(() => {
         const fetchData = async () => {
             const data = await getSearchValueData();
@@ -60,22 +60,22 @@ const Homepage = () => {
     }, []);
 
     return (
-        <div className='container min-vh-100 d-flex flex-column justify-content-center align-items-center '>
+        <section className='container min-vh-100 d-flex flex-column justify-content-center align-items-center '>
             <form onSubmit={(e) => handlesubmit(e)}>
                 <input type="search" value={search} onChange={e => setSearch(e.target.value)} placeholder='film ara' />
                 <button type='submit'>ara</button>
             </form>
-            {/* {
-                movie?.Search?.map(m => (
-                    <div key={m.imdbID}>
-                    <p>{m.Title}</p>
-                    </div>
-                    ))
-                } */}
-            <div className='w-100 bg-danger d-flex gap-2 justify-content-between align-items-center text-capitalize'>
-                <div className='w-50 d-flex flex-column align-items-center my-2 py-2'>
-                    <p>Select Type:</p>
-                    <div className='d-flex align-items-center gap-2'>
+            <div className='w-100 d-flex flex-column flex-md-row justify-content-between align-items-center text-capitalize'>
+                <div className=' my-2 py-2 d-flex gap-2 align-items-center w-100 '>
+                    <p className='fw-bold p-0 m-0'>Search Year:</p>
+                    <form onSubmit={(e) => filtrele(e)} className='d-flex w-75   gap-2 '>
+                        <input className=" border-0 rounded-2  w-100 px-2 " placeholder='Year...' type="number" min="1900" max="2024" step="1" value={year} onChange={e => setYear(e.target.value)} />
+                        <button className=''>Filtrele</button>
+                    </form>
+                </div>
+                <div className='w-100 d-flex gap-2 justify-content-between align-items-center my-2 py-2 '>
+                    <div className='w-100 d-flex justify-content-center justify-content-md-end align-items-center gap-2'>
+                        <p className='p-0 m-0 fw-bold'>Select Type:</p>
                         <div className='gap-2 d-flex'>
                             <input type="radio" id="alltype" name='selectType' value="null" className='form-check-input' onChange={(e) => { handleType(e) }} />
                             <label htmlFor="alltype">all type</label>
@@ -90,14 +90,6 @@ const Homepage = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-50 my-2 py-2'>
-                    <label htmlFor="year">Search Year:</label>
-                    <form onSubmit={(e)=>filtrele(e)}>
-                        <input className=" p-2 w-25 border-0 rounded-2 d-flex justify-content-between" placeholder='Year...' type="number" min="1900" max="2024" step="1" value={year} onChange={e => setYear(e.target.value)} />
-                        <button >Filtrele</button>
-                    </form>
-
-                </div>
             </div>
             <h4>{movie?.totalResults}</h4>
             <RenderMovie data={movie?.Search} />
@@ -110,7 +102,7 @@ const Homepage = () => {
                     <button className="page-link" disabled={pageNumber >= Math.ceil(movie?.totalResults / 10)} onClick={sonrakiSayfa} >Next</button>
                 </li>
             </ul>
-        </div>
+        </section>
     )
 }
 

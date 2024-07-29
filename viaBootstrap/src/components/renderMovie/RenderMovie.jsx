@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 const RenderMovie = ({ data }) => {
     return (
-        <table className="table table-responsive table-striped table-hover table-dark text-center">
+        <table className="table table-responsive table-striped table-hover table-dark text-center ">
             <thead>
                 <tr>
                     <th scope="col"># imdbID</th>
-                    <th scope="col">Poster</th>
+                    <th scope="col" className=''>Poster</th>
                     <th scope="col">Name</th>
                     <th scope="col">Release Date</th>
                     <th scope="col">Type</th>
@@ -18,12 +18,11 @@ const RenderMovie = ({ data }) => {
                     data?.map((d) => (
                         <tr key={d.imdbID}>
                             <td># {d.imdbID}</td>
-                            <td>
+                            <td className=''>
                                 <img src={d?.Poster} alt={d.Title} className=' h-25 w-25' />
                             </td>
                             <Link to={`${d.imdbID}`} className='bg-danger mh-100 d-block '>
-
-                            <td >{d.Title}</td>
+                                <td className='d-inline-block'>{d.Title}</td>
                             </Link>
                             <td>{d.Year}</td>
                             <td>{d.Type}</td>
