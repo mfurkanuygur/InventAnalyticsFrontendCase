@@ -7,7 +7,6 @@ const Detail = () => {
     const [data, setData] = useState()
     const [season, setSeason] = useState()
     const [seasonNumber, setSeasonNumber] = useState(1)
-    const [open, setOpen] = useState(false)
     useEffect(() => {
         const fetchData = async () => {
             const fetchData = await getUniqueMovieData(id);
@@ -30,12 +29,12 @@ const Detail = () => {
 
     }
     return (
-        <div className='flex flex-col gap-4 justify-center items-center min-h-dvh bg-slate-800   p-8'>
+        <div className='flex flex-col gap-4 justify-center items-center min-h-dvh bg-slate-800   p-4'>
             {
                 data &&
-                <div className='grid grid-cols-1 md:grid-cols-3  gap-4'>
-                    <div className='col-span-1 flex justify-center items-start  w-full'>
-                        <img src={data.Poster} alt="" className=' rounded-xl bg-gray-600 w-full min-w-64 max-w-80 h-auto min-h-96' />
+                <div className='grid grid-cols-1 md:grid-cols-3  md:gap-4'>
+                    <div className='col-span-1 flex justify-center items-start  w-full '>
+                        <img src={data.Poster} alt="" className=' rounded-xl bg-gray-600  w-full min-w-64 max-w-80 h-auto min-h-96' />
                     </div>
                     <div className='col-span-2 flex flex-col gap-2 min-h-dvh'>
                         <div className='flex gap-4 items-center'>
@@ -71,7 +70,7 @@ const Detail = () => {
                                     <p className='font-semibold'>{data.Actors}</p>
                                 </div>
                             </div>
-                            <div className='flex justify-between items-center'>
+                            <div className='flex flex-col md:flex-row justify-between items-center'>
                                 {
                                     data.Type === "series" &&
                                     <>
@@ -98,16 +97,20 @@ const Detail = () => {
                         {
                             data.Type === "series" &&
                             <>
-                                <p className='font-bold text-xl'>Season {seasonNumber} </p>
+                                <div className='flex justify-between items-center my-3'>
+                                    <p className='font-bold text-xl'>Season {seasonNumber} </p>
+                                    <p className='font-bold text-xl'>Episodes {season?.Episodes?.length} </p>
+                                </div>
                                 <div className='grid grid-cols-2 gap-4'>
                                     {
-                                        season.Episodes.map(s => (
+
+                                        season?.Episodes?.map(s => (
                                             <div key={s.imdbID} className='bg-slate-300 text-black p-3 rounded-xl'>
                                                 <div className='flex flex-col items-start '>
                                                     <p className='text-sm'>S{season.Season}.E{s.Episode}</p>
-                                                    <p className='font-bold'>{s.Title}</p>
+                                                    <p className='font-bold line-clamp-2'>{s.Title}</p>
                                                 </div>
-                                                <p className='text-xs'>{s.Released}</p>
+                                                <p className='text-xs'>{s.Released.split("-").reverse().join(".")}</p>
                                             </div>
                                         ))
                                     }
