@@ -1,5 +1,5 @@
 
-const apikey = import.meta.env.APIKEY
+const apikey = import.meta.env.VITE_VERCEL_ENV
 
 export const getSearchValueData = async (search = "pokemon", pageNumber = "1", year = null, type = null) => {
     try {
