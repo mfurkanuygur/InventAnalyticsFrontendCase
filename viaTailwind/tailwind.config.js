@@ -10,10 +10,12 @@ export default {
       secondary: "#00205C",
       primary_hover: "#FD3045",
       black: "#000",
-      white:"#ffff"
+      white: "#ffff"
     },
     extend: {
-
+      fontFamily: {
+        "inspiration": ['Inspiration', 'cursive']
+      },
     },
   },
   plugins: [],

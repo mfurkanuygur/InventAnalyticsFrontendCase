@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
+import { setYearNumber } from '../redux/slices/yearFilter';
 const Navbar = () => {
     const searchName = useSelector(state => state.searchNameSlice.value);
     const dispatch = useDispatch();
@@ -16,11 +17,12 @@ const Navbar = () => {
     const handleSearch = (e) => {
         e.preventDefault()
         if (searchName.trim() !== "") {
+            dispatch(setYearNumber("null"))
             getSearchValueData(searchName).then(fetchData => dispatch(setData(fetchData)))
             navigate("/")
         }
         else {
-            toast.warning("Film ismi giriniz")
+            toast.error("Enter a Movie or Series Name!!!")
         }
         dispatch(setPageNumber(1))
     }
@@ -41,19 +43,19 @@ const Navbar = () => {
                     <Link to={"/"} className='block md:hidden text-lg font-bold'>
                         <FaHome className='text-xl' />
                     </Link>
-                    <FaSearch onClick={() => setOpen(!open)} className='text-xl block md:hidden' />
+                    <FaSearch onClick={() => setOpen(!open)} className='text-xl block md:hidden cursor-pointer' />
                 </div>
             </div>
             {
                 open &&
                 <form onSubmit={(e) => handleSearch(e)} className=' items-stretch justify-center py-4 flex md:hidden'>
-                    <input className='text-white  py-2 px-2 rounded-s-xl border-2 border-e-0 border-secondary  text-secondary focus:outline-none' type="search" value={searchName} onChange={e => dispatch(setSearchName(e.target.value))} placeholder='Search movie or series...' />
+                    <input className=' py-2 px-2 rounded-s-xl border-2 border-e-0 border-secondary  text-secondary focus:outline-none' type="search" value={searchName} onChange={e => dispatch(setSearchName(e.target.value))} placeholder='Search movie or series...' />
                     <button type='submit' className='bg-secondary text-white hover:bg-primary_hover px-6 py-2   hover:bg-slate-600 text-slate-600 hover:text-white rounded-e-xl'>Search</button>
                 </form>
             }
             <form onSubmit={(e) => handleSearch(e)} className=' items-stretch justify-center py-4 hidden md:flex'>
-                <input className='text-white  py-2 px-2 rounded-s-xl border-2 border-e-0 border-secondary  text-secondary focus:outline-none' type="search" value={searchName} onChange={e => dispatch(setSearchName(e.target.value))} placeholder='Search movie or series...' />
-                <button type='submit' className='bg-secondary text-white hover:bg-primary_hover px-6 py-2   hover:bg-slate-600 text-slate-600 hover:text-white rounded-e-xl'>Search</button>
+                <input className='  py-2 px-2 rounded-s-xl border-2 border-e-0 border-secondary  text-secondary focus:outline-none' type="search" value={searchName} onChange={e => dispatch(setSearchName(e.target.value))} placeholder='Search movie or series...' />
+                <button type='submit' className='bg-secondary text-white hover:bg-primary_hover px-6 py-2 hover:bg-slate-600 text-slate-600 hover:text-white rounded-e-xl'>Search</button>
             </form>
         </div>
 

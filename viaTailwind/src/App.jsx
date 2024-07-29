@@ -3,13 +3,15 @@ import Router from './routes/Router'
 import { Bounce, Flip, Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <main className='min-h-dvh min-w-full bg-secondary container mx-auto  text-white '>
+    <main className='min-h-dvh min-w-full bg-secondary container mx-auto  text-secondary'>
       <Navbar />
       <Router />
+      <Footer />
       <ToastContainer
         stacked
         position="bottom-center"

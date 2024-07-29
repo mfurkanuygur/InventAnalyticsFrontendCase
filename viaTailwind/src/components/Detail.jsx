@@ -99,7 +99,7 @@ const Detail = () => {
                                             <p className='font-bold text-xl text-secondary'>{seasonNumber}</p>
 
                                             <button className='bg-primary px-4 py-2 rounded-e-full '
-                                                disabled={seasonNumber >= season.totalSeasons}
+                                                disabled={seasonNumber >= season?.totalSeasons}
                                                 onClick={handleNextSeason}>Next Season</button>
                                         </div>
                                     </>
@@ -114,7 +114,7 @@ const Detail = () => {
                                     <p className='font-bold text-xl'>Season {seasonNumber} </p>
                                     <p className='font-bold text-xl'>Episodes {season?.Episodes?.length} </p>
                                 </div>
-                                <div className='grid grid-cols-2 gap-4'>
+                                <div className='grid grid-cols-2 gap-2'>
                                     {
                                         season?.Episodes?.map(s => (
                                             <div key={s.imdbID} className=' text-secondary border-2 border-secondary p-3 rounded-xl'>
@@ -122,10 +122,10 @@ const Detail = () => {
                                                     <p className='text-sm'>S{season.Season}.E{s.Episode}</p>
                                                     <p className='text-xs'>{s.Released.split("-").reverse().join(".")}</p>
                                                 </div>
-                                                <Link to={`/episode/${s.imdbID}`}>
-                                                    <div className='flex justify-between items-center'>
-                                                        <p className='font-bold text-lg line-clamp-1'>{s.Title}</p>
-                                                        <FaAngleDoubleRight className='text-xl' />
+                                                <Link to={`/episode/${id}/${season.Season}/${s.Episode}`} className='hover:text-primary'>
+                                                    <div className='flex justify-between items-center gap-2'>
+                                                        <p className='font-bold text-lg line-clamp-1 w-11/12'>{s.Title}</p>
+                                                        <FaAngleDoubleRight className='text-xl w-1/12  text-primary'  />
                                                     </div>
                                                 </Link>
                                             </div>

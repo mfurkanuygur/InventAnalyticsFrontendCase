@@ -4,7 +4,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import { TiInfoLarge } from "react-icons/ti";
 const RenderMovie = ({ data }) => {
     return (
-        <div className=' w-full  mx-2 rounded-xl border-2 overflow-hidden'>
+        <div className=' w-full  rounded-xl border-2 overflow-hidden'>
             <table className="table-auto  w-full  text-center bg-white text-secondary ">
                 <thead >
                     <tr className='divide-x divide-black  uppercase italic text-primary '>
@@ -28,7 +28,7 @@ const RenderMovie = ({ data }) => {
                                 </td>
                                 <td><p>{d.Year}</p></td>
                                 <td className='hidden md:flex justify-center items-center min-h-40  '><p>{d.Type}</p></td>
-                                <td className=''><Link to={`/${d.imdbID}`}><FaAngleDoubleRight className='w-full text-xl md:text-2xl text-primary hover:text-primary_hover animate-pulse' /></Link></td>
+                                <td className=''><Link to={`/detail/${d.imdbID}`}><FaAngleDoubleRight className='w-full text-xl md:text-2xl text-primary hover:text-primary_hover animate-pulse' /></Link></td>
                             </tr>
 
                         ))

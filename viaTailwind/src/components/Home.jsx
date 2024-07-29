@@ -8,7 +8,8 @@ import { setMovieType } from '../redux/slices/movieType';
 import { setYearNumber } from '../redux/slices/yearFilter';
 import { decrement, increment, setPageNumber } from '../redux/slices/pageNumber';
 import { setData } from '../redux/slices/data';
-import { FaAngleDoubleRight ,FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
+import notfoundgif from '../assets/notfound.gif'
 
 const Home = () => {
     const pageNumber = useSelector(state => state.pageNumberSlice.value);
@@ -16,6 +17,7 @@ const Home = () => {
     const movieType = useSelector(state => state.movieTypeSlice.value);
     const yearFilter = useSelector(state => state.yearFilterSlice.value)
     const data = useSelector(state => state.dataSlice.value)
+    console.log(data)
     const dispatch = useDispatch();
     // const [data, setData] = useState()
 
@@ -54,8 +56,8 @@ const Home = () => {
         getSearchValueData(searchName, newPageNumber, yearFilter, movieType).then(fetchData => dispatch(setData(fetchData)));
     };
     return (
-        <section className='flex flex-col gap-4 justify-center items-center min-h-dvh   text-secondary py-24 lg:px-32 '>
-           
+        <section className='flex flex-col gap-4 justify-center items-center min-h-dvh px-2   text-secondary py-24 lg:px-32 '>
+
             <div className=' w-full  flex flex-col md:flex-row justify-between items-center md:items-end gap-4  '>
                 <div className='flex flex-col justify-center items-start gap-1 capitalize  '>
                     <p className='font-bold text-lg text-white w-full text-center md:text-left'>Select Type</p>
@@ -85,8 +87,8 @@ const Home = () => {
                 <h1 className='hidden md:block text-xl text-white font-semibold'>Total Results: {data?.totalResults}</h1>
                 <div className='flex flex-col items-start justify-center gap-1  '>
                     <p className='font-bold text-lg text-white w-full text-center md:text-left'>Enter Year</p>
-                    <form onSubmit={(e) => handleYear(e)} className='flex items-center justify-center text-secondary '>
-                        <input className='focus:outline-none  py-2 px-2 rounded-s-xl' value={yearFilter == "null" ? "" : yearFilter} type="search" onChange={e => dispatch(setYearNumber(e.target.value))} placeholder='Movie or Series year...' />
+                    <form onSubmit={(e) => handleYear(e)} className='flex items-center justify-center text-secondary'>
+                        <input className='focus:outline-none  py-2 px-2 rounded-s-xl w-full' value={yearFilter == "null" ? "" : yearFilter} max="2024" step="1" type='number' onChange={e => dispatch(setYearNumber(e.target.value))} placeholder='Movie or Series year...' />
                         <button type='submit' className='bg-primary hover:bg-primary_hover px-4 py-2  hover:text-white rounded-e-xl'>Filter</button>
                     </form>
                 </div>
@@ -95,23 +97,26 @@ const Home = () => {
             </div>
 
             {
-                data &&
+                data?.Response == "True" &&
                 <>
                     <RenderMovie data={data} />
                     <div className='flex items-center bg-white py-2  rounded-xl  '>
-                        <button className=" text-primary px-4 rounded-s-xl" 
-                        disabled={pageNumber == 1 ? true : null} onClick={prevPage}>
-                            <FaAngleDoubleLeft className='text-xl'/>
+                        <button className=" text-primary px-4 rounded-s-xl hover:text-secondary"
+                            disabled={pageNumber == 1 ? true : null} onClick={prevPage}>
+                            <FaAngleDoubleLeft className='text-xl' />
                         </button>
                         <p className="font-bold text-2xl bg-white  px-3 border-x-2 border-secondary" href="#">{pageNumber}</p>
-                        <button className=" px-4  rounded-e-xl  text-primary"
+                        <button className=" px-4 rounded-e-xl  text-primary hover:text-secondary"
                             disabled={pageNumber >= Math.ceil(data?.totalResults / 10)} onClick={nextPage} >
-                            <FaAngleDoubleRight className='text-xl'/>
+                            <FaAngleDoubleRight className='text-xl' />
                         </button>
                     </div>
                 </>
                 ||
-                <div>Loading...</div>
+                <div className='flex flex-col justify-center items-center text-white font-bold text-3xl'>
+                    <img src={notfoundgif} alt="Not Found" />
+                    {data?.Error}
+                </div>
             }
 
         </section>
