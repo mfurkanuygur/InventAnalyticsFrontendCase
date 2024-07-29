@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const apikey = import.meta.env.VITE_VERCEL_ENV
+const apikey = process.env.REACT_APP_APIKEY
 
 export const getSearchValueData = async (search = "pokemon", pageNumber = "1", year = null, type = null) => {
     try {
